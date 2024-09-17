@@ -9,6 +9,7 @@ public class ResponseUtil {
         response.put("messages", message);
 
         System.out.println("Teste GIT");
+        System.out.println("Teste GIT- v3");
         return response;
     }
 }
