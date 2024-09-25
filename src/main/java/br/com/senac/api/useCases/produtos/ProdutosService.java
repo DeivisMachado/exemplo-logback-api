@@ -10,11 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Service
 public class ProdutosService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProdutosService.class);
 
     public PaginacaoResponse<List<ProdutosResponseDom>>
         carregarProdutos(PaginacaoRequest request){
@@ -59,5 +63,19 @@ public class ProdutosService {
         }
 
         return null;
+    }
+
+    @Autowired
+    public void carregarEExibirProdutos() {
+        List<ProdutosResponseDom> produtos = carregarProdutos();
+        if (produtos != null && !produtos.isEmpty()) {
+            logger.info("Produtos carregados:");
+            for (ProdutosResponseDom produto : produtos) {
+                logger.info("ID: {}, Nome: {}, Descrição: {}", 
+                    produto.getId(), produto.getNome(), produto.getDescricao());
+            }
+        } else {
+            logger.info("Nenhum produto encontrado.");
+        }
     }
 }
